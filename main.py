@@ -5,7 +5,7 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
+WORK_MIN = 1
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
@@ -14,8 +14,12 @@ timer = None
 # ---------------------------- TIMER RESET ------------------------------- # 
 
 def reset():
-    canvas.itemconfig(timer_text, text='00:00:00')
+    canvas.itemconfig(timer_text, text='00:00')
     window.after_cancel(timer)
+    timer_up.config(text='Timer')
+    check_label.config(text='')
+    global reps
+    reps = 0
 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
@@ -23,17 +27,17 @@ def caller():
     global reps
     reps += 1
 
-    # if reps % 8 == 0:
-    #     to_do = LONG_BREAK_MIN
-    #     timer_up.config(text="BREAK", fg=RED)
-    # elif reps % 2 == 0:
-    #     to_do = SHORT_BREAK_MIN
-    #     timer_up.config(text="BREAK", fg=PINK)
-    # else:
-    #     to_do = WORK_MIN
-    #     timer_up.config(text="WORK", fg=GREEN)
-    hour = 2
-    to_do = hour * 60
+    if reps % 8 == 0:
+        to_do = LONG_BREAK_MIN
+        timer_up.config(text="BREAK", fg=RED)
+    elif reps % 2 == 0:
+        to_do = SHORT_BREAK_MIN
+        timer_up.config(text="BREAK", fg=PINK)
+    else:
+        to_do = WORK_MIN
+        timer_up.config(text="WORK", fg=GREEN)
+    # hour = 0.001
+    # to_do = hour * 60
     timer_up.config(text="TEST")
     down(count=to_do * 60)
 
@@ -44,7 +48,7 @@ def caller():
 def down(count):
     count_hour = int(int(count / 60) / 60)
     count_min = int(count / 60) % 60
-    count_sec = count % 60
+    count_sec = int(count % 60)
     if count_hour < 10:
         count_hour = f'0{count_hour}'
     if count_min < 10:
