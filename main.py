@@ -17,7 +17,7 @@ def reset():
     canvas.itemconfig(timer_text, text='00:00')
     window.after_cancel(timer)
     timer_up.config(text='Timer')
-    check_label.config(text='')
+    check_label.config(text="")
     global reps
     reps = 0
 
